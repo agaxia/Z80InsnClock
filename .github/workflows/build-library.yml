@@ -1,0 +1,70 @@
+name: Build library
+
+on:
+  push:
+    paths:
+    - '.github/workflows/build-library.yml'
+    - 'API/**'
+    - 'sources/*.c'
+    - 'sources/*.rc.in'
+    - 'CMakeLists.txt'
+  pull_request:
+    paths:
+    - '.github/workflows/build-library.yml'
+    - 'API/**'
+    - 'sources/*.c'
+    - 'sources/*.rc.in'
+    - 'CMakeLists.txt'
+
+env:
+  ZETA_TARBALL_URL: 'http://zxe.io/software/Zeta/download/Zeta-latest.tar.xz'
+  BUILD_SHARED_LIBS: YES
+  CMAKE_BUILD_TYPE: Release
+  Z80InsnClock_NOSTDLIB_FLAGS: Auto
+  Z80InsnClock_WITH_CMAKE_SUPPORT: NO
+  Z80InsnClock_WITH_HTML_DOCUMENTATION: NO
+  Z80InsnClock_WITH_PDF_DOCUMENTATION: NO
+  Z80InsnClock_WITH_PKGCONFIG_SUPPORT: NO
+  Z80InsnClock_WITH_STANDARD_DOCUMENTS: NO
+
+jobs:
+  build-library:
+    runs-on: ${{matrix.os}}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies (POSIX)
+      if: startsWith(matrix.os, 'macos') || startsWith(matrix.os, 'ubuntu')
+      run: |
+        mkdir -p "${{github.workspace}}/build"
+        curl -L "${{env.ZETA_TARBALL_URL}}" | xz -cd | tar -C "${{github.workspace}}/build" --strip-components=2 -xf - Zeta/API/Z
+
+    - name: Install dependencies (Windows)
+      if: startsWith(matrix.os, 'windows')
+      shell: cmd
+      run: |
+        mkdir "${{github.workspace}}\build"
+        curl -L "${{env.ZETA_TARBALL_URL}}" | 7z x -txz -si -so | 7z x -si -ttar -o"${{github.workspace}}\build" Zeta/API/Z
+
+    - name: Configure CMake
+      run: >-
+        cmake
+        -DBUILD_SHARED_LIBS=${{env.BUILD_SHARED_LIBS}}
+        -DCMAKE_BUILD_TYPE=${{env.CMAKE_BUILD_TYPE}}
+        -DZ80InsnClock_FETCH_TEST_FILES=${{env.Z80InsnClock_FETCH_TEST_FILES}}
+        -DZ80InsnClock_NOSTDLIB_FLAGS=${{env.Z80InsnClock_NOSTDLIB_FLAGS}}
+        -DZ80InsnClock_WITH_CMAKE_SUPPORT=${{env.Z80InsnClock_WITH_CMAKE_SUPPORT}}
+        -DZ80InsnClock_WITH_HTML_DOCUMENTATION=${{env.Z80InsnClock_WITH_HTML_DOCUMENTATION}}
+        -DZ80InsnClock_WITH_PDF_DOCUMENTATION=${{env.Z80InsnClock_WITH_PDF_DOCUMENTATION}}
+        -DZ80InsnClock_WITH_PKGCONFIG_SUPPORT=${{env.Z80InsnClock_WITH_PKGCONFIG_SUPPORT}}
+        -DZ80InsnClock_WITH_STANDARD_DOCUMENTS=${{env.Z80InsnClock_WITH_STANDARD_DOCUMENTS}}
+        -B "${{github.workspace}}/build"
+        -S "${{github.workspace}}"
+
+    - name: Build
+      run: cmake --build "${{github.workspace}}/build" --config ${{env.CMAKE_BUILD_TYPE}} --verbose

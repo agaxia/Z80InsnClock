@@ -5,8 +5,9 @@ includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
 Name: @PROJECT_NAME@
 Description: @PROJECT_DESCRIPTION@.
-URL: https://zxe.io/software/@PROJECT_NAME@
+URL: @PROJECT_HOMEPAGE_URL@
 Version: @PROJECT_VERSION@
 Requires: Z80
 Cflags: -I${includedir}
+Cflags.private: -DZ80_INSN_CLOCK_STATIC
 Libs: -L${libdir} -l@PROJECT_NAME@

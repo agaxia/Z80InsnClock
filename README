@@ -1,0 +1,230 @@
+
+ ________ ________ ________ ___                 ________ __             ___
+|____   /|   __   |   __   |  |\               /|   ____|  |           /|  |
+ \__/  / |  |\_|  |  |\_|  |  |_|___ _____ ___|_|  |___/|  | _____ ___|_|  | ___
+   /  / /|   __   |  | ||  |  |     |  ___|     |  |  | |  ||     |  ___|  |/  /
+  /  /_/_|  |\_|  |  |_||  |  |  |  |___  |  |  |  |__|_|  ||  |  | |__/|     <
+ /_______|________|________|__|__|__|_____|__|__|_______|___|_____|_____|__|\__\
+ \________\________\________\__\__\__\___/__/__/_______/___/_____/_____/__/\/__/
+
+                           Z80 Instruction Clock v0.1
+
+                   Copyright (C) 2021-2024 Sofía Ortega Sosa
+            Released under the terms of the BSD Zero Clause License
+                      https://zxe.io/software/Z80InsnClock
+
+
+1.  Introduction
+================
+
+Z80InsnClock is a small library written in ANSI C that provides T-state level
+precision to Z80 emulators. It allows to determine the exact clock cycle within
+an instruction at which the ongoing M-cycle starts, as well as its duration.
+
+The library offers two modes of operation: Basic and Extra. Each mode increases
+the size of the library by 4 KiB of tables that contain patterns describing all
+Z80 instructions.
+
+The Basic mode is the most simple, determining only the starting clock cycle of
+each M-cycle, and all related functions are inline.
+
+The Extra mode allows knowing, in addition to the starting clock cycle, the
+number of extra clock cycles in the M-cycle and thus its duration, making it
+suitable for emulating systems such as the ZX Spectrum. This mode is a bit more
+complex and requires calling a non-inline function during the opcode fetch.
+
+Most users will integrate Z80InsnClock as a CMake subproject or copy its source
+code into their projects. In this case, if you do not need both operation modes,
+you can disable the compilation of the unused one.
+
+
+2.  Installation from sources
+=============================
+
+2.1.  Prerequisites
+
+You will need CMake v3.14 or later to build the package and, optionally, recent
+versions of Doxygen, Sphinx and Breathe to compile the documentation. Also, make
+sure that you have LaTeX with PDF support installed on your system if you want
+to generate the documentation in PDF format.
+
+The Z80InsnClock library requires some types and macros included in Zeta, a
+header-only, dependency-free library used for portability reasons. Zeta is the
+sole dependency; Z80InsnClock does not depend on the C standard library.
+
+2.2.  Configure
+
+Once the prerequisites are met, create a directory and run `cmake` from there to
+prepare the build system:
+
+    $ mkdir build
+    $ cd build
+    $ cmake [options] <Z80InsnClock-project-directory>
+
+The resulting build files can be configured by passing options to `cmake`. To
+show a complete list of those available along with their current settings, type
+the following:
+
+    $ cmake -LAH -N -B .
+
+If in doubt, read the CMake documentation for more information on configuration
+options. The following are some of the most relevant standard options of CMake:
+
+    -DBUILD_SHARED_LIBS=(YES|NO)
+        Generate shared libraries rather than static libraries.
+        The default is `NO`.
+
+    -DCMAKE_BUILD_TYPE=(Debug|Release|RelWithDebInfo|MinSizeRel)
+        Choose the type of build (configuration) to generate.
+        The default is `Release`.
+
+    -DCMAKE_INSTALL_NAME_DIR="<path>"
+        Specify the directory portion of the dynamic library install name on
+        Apple platforms (for installed shared libraries).
+        Not defined by default.
+
+    -DCMAKE_INSTALL_PREFIX="<path>"
+        Specify the installation prefix.
+        The default is `/usr/local` (on UNIX and UNIX-like operating systems).
+
+Package-specific options are as follows:
+
+    -DZ80InsnClock=(All|Basic|Extra)
+        Specify which operation mode(s) to build.
+        `All` enables both `Basic` and `Extra`. `Basic` mode is the simplest and
+        only determines the clock cycle at which the ongoing M-cycle begins,
+        while `Extra` mode additionally provides information about the duration
+        of the M-cycle.
+        The default is `All`.
+
+    -DZ80InsnClock_INSTALL_CMAKEDIR="<path>"
+        Specify the directory in which to install the CMake config-file package.
+        The default is `"${CMAKE_INSTALL_LIBDIR}/cmake/Z80InsnClock".
+
+    -DZ80InsnClock_INSTALL_PKGCONFIGDIR="<path>"
+        Specify the directory in which to install the pkg-config file.
+        The default is `"${CMAKE_INSTALL_LIBDIR}/pkgconfig"`.
+
+    -DZ80InsnClock_NOSTDLIB_FLAGS=(Auto|"[<flag>[;<flag>...]]")
+        Specify the linker flags used to avoid linking against system libraries.
+        The default is `Auto` (autoconfigure flags). If you get linker errors,
+        set this option to `""`.
+
+    -DZ80InsnClock_OBJECT_LIBS=(YES|NO)
+        Build Z80InsnClock as an object library.
+        This option takes precedence over `BUILD_SHARED_LIBS` and
+        `Z80InsnClock_SHARED_LIBS`. If enabled, the build system will ignore
+        `Z80InsnClock_WITH_CMAKE_SUPPORT` and
+        `Z80InsnClock_WITH_PKGCONFIG_SUPPORT`, as no libraries or support files
+        will be installed.
+        The default is `NO`.
+
+    -DZ80InsnClock_SHARED_LIBS=(YES|NO)
+        Build Z80InsnClock as a shared library, rather than static.
+        This option takes precedence over `BUILD_SHARED_LIBS`.
+        Not defined by default.
+
+    -DZ80InsnClock_SPHINX_HTML_THEME="[<name>]"
+        Specify the Sphinx theme for the documentation in HTML format.
+        The default is `""` (use the default theme).
+
+    -DZ80InsnClock_WITH_CMAKE_SUPPORT=(YES|NO)
+        Generate and install the CMake config-file package.
+        The default is `NO`.
+
+    -DZ80InsnClock_WITH_HTML_DOCUMENTATION=(YES|NO)
+        Build and install the documentation in HTML format.
+        It requires Doxygen, Sphinx and Breathe.
+        The default is `NO`.
+
+    -DZ80InsnClock_WITH_PDF_DOCUMENTATION=(YES|NO)
+        Build and install the documentation in PDF format.
+        It requires Doxygen, Sphinx, Breathe, and LaTeX with PDF support.
+        The default is `NO`.
+
+    -DZ80InsnClock_WITH_PKGCONFIG_SUPPORT=(YES|NO)
+        Generate and install the pkg-config file.
+        The default is `NO`.
+
+    -DZ80InsnClock_WITH_STANDARD_DOCUMENTS=(YES|NO)
+        Install the standard text documents distributed with the package:
+        AUTHORS, HISTORY, LICENSE-0BSD and README.
+        The default is `NO`.
+
+2.3.  Build and install
+
+Finally, once the build system is configured according to your needs, build and
+install the package:
+
+    $ cmake --build . [--config (Debug|Release|RelWithDebInfo|MinSizeRel)]
+    # cmake --install . [--config <configuration>] [--strip]
+
+The `--config` option is only necessary for those CMake generators that ignore
+`CMAKE_BUILD_TYPE` (e.g., Xcode and Visual Studio). Use `--strip` to remove
+debugging information and non-public symbols when installing non-debug builds of
+the shared library.
+
+
+3.  Integration
+===============
+
+3.1.  As an external dependency in CMake-based projects
+
+The Z80InsnClock library includes a config-file package for integration into
+CMake-based projects that must be installed for development. Use `find_package`
+to find the `Z80InsnClock` package. This creates the `Z80InsnClock` imported
+library target, which carries the necessary transitive link dependencies.
+Optionally, the linking method can be selected by specifying either the `Shared`
+or `Static` component.
+
+Example:
+
+    find_package(Z80InsnClock REQUIRED Shared)
+    target_link_libraries(your-target Z80InsnClock)
+
+When not specified as a component, the linking method is selected according to
+`Z80InsnClock_SHARED_LIBS`. If this option is not defined, the config-file uses
+the type of library that is installed on the system and, if it finds both the
+shared and the static versions, `BUILD_SHARED_LIBS` determines which one to link
+against.
+
+3.2.  As a CMake subproject
+
+To embed the Z80InsnClock library as a CMake subproject, extract its source code
+tarball (or clone its repository) into a subdirectory of another project. Then
+use `add_subdirectory` in the parent project to add the Z80InsnClock source code
+tree to the build process.
+
+It is advisable to configure the Z80InsnClock library in the CMakeLists.txt of
+the parent project. This will prevent the user from having to specify
+configuration options for the Z80InsnClock subproject through the command line
+when building the main project.
+
+Example:
+
+    set(Z80InsnClock_SHARED_LIBS NO CACHE BOOL "")
+    add_subdirectory(dependencies/Z80InsnClock)
+    target_link_libraries(your-target Z80InsnClock)
+
+It is important to set the `Z80InsnClock_SHARED_LIBS` option. Otherwise, CMake
+will build the library type indicated by `BUILD_SHARED_LIBS`, which may not be
+the desired one.
+
+
+4.  License
+===========
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+
+________________________________________________________________________________
+Last update: 2024-12-23                                               README EOF
