@@ -72,8 +72,6 @@ Pre-built binaries for Windows are available on the [download](https://zxe.io/so
 
 You will need [CMake](https://cmake.org) v3.14 or later to build the package and, optionally, recent versions of [Doxygen](https://www.doxygen.nl), [Sphinx](https://www.sphinx-doc.org) and [Breathe](https://www.breathe-doc.org) to compile the documentation. Also, make sure that you have [LaTeX](https://www.latex-project.org) with PDF support installed on your system if you want to generate the documentation in PDF format.
 
-Z80InsnClock depends on [Z80](https://zxe.io/software/Z80) v0.2 or later. Although it does not need to be linked against Z80, it requires the `Z80.h` header.
-
 The Z80InsnClock library requires some types and macros included in [Zeta](https://zxe.io/software/Zeta), a [header-only](https://en.wikipedia.org/wiki/Header-only), dependency-free library used for portability reasons. Zeta is the sole dependency; Z80InsnClock does not depend on the [C standard library](https://en.wikipedia.org/wiki/C_standard_library).
 
 ### Configure
