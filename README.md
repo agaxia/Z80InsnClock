@@ -201,7 +201,7 @@ cmake --install . --config Release --strip
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/BSD_wordmark.svg" width="160" align="right">
 
-Copyright © 2021-2024 Sofía Ortega Sosa.
+Copyright © 2021-2025 Sofía Ortega Sosa.
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted.

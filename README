@@ -9,7 +9,7 @@
 
                            Z80 Instruction Clock v0.1
 
-                   Copyright (C) 2021-2024 Sofía Ortega Sosa
+                   Copyright (C) 2021-2025 Sofía Ortega Sosa
             Released under the terms of the BSD Zero Clause License
                       https://zxe.io/software/Z80InsnClock
 
@@ -227,4 +227,4 @@ PERFORMANCE OF THIS SOFTWARE.
 
 
 ________________________________________________________________________________
-Last update: 2024-12-23                                               README EOF
+Last update: 2025-01-24                                               README EOF

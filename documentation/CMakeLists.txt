@@ -4,7 +4,7 @@
 #  \__/  / |  |\_|  |  |\_|  | |
 #    /  / /|   __   |  | ||  | |
 #   /  /_/_|  |\_|  |  |_||  | | Instruction Clock
-#  /_______|________|________| | Copyright (C) 2021-2024 Sofía Ortega Sosa.
+#  /_______|________|________| | Copyright (C) 2021-2025 Sofía Ortega Sosa.
 #  \________\________\________\| Released under the BSD Zero Clause License.
 
 find_package(Doxygen REQUIRED)

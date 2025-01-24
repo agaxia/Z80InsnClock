@@ -4,7 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 author = u'Sofía Ortega Sosa'
-copyright = u'2021-2023 Sofía Ortega Sosa'
+copyright = u'2021-2025 Sofía Ortega Sosa'
 extensions = ['breathe']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
