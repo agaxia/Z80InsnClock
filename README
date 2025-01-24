@@ -196,7 +196,7 @@ use `add_subdirectory` in the parent project to add the Z80InsnClock source code
 tree to the build process.
 
 It is advisable to configure the Z80InsnClock library in the CMakeLists.txt of
-the parent project. This will prevent the user from having to specify
+the parent project. This will eliminate the need for the user to specify
 configuration options for the Z80InsnClock subproject through the command line
 when building the main project.
 
