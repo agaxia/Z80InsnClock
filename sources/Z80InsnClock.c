@@ -159,7 +159,7 @@
 #define jr_c_OFFSET	     5058,    84 /* "		   |		| "		 | "		 | "		    |		  |		  */
 #define jr_Z_OFFSET_false  0x0000	 /*  7:43	   |		| opcode(pc)	 | operand(pc+1) |		    |		  |		  */
 #define jp_hl		      000,     4 /*  4:4	   |		| opcode(pc)	 |		 |		    |		  |		  */
-#define jp_XY		      000,     4 /*  8:44	   |		| opcode(pc)	 |		 |		    |		  |		  */
+#define jp_XY		      000,     4 /*  8:44	   | prefix(pc) | opcode(pc+1)	 |		 |		    |		  |		  */
 #define djnz_OFFSET	     5188,    85 /* 13:535	   |		| opcode(pc):1	 | operand(pc+1) | %:5		    |		  |		  */
 #define djnz_OFFSET_false  0x0100	 /*  8:53	   |		| opcode(pc):1	 | operand(pc+1) |		    |		  |		  */
 					 /*----------------+------------+----------------+---------------+------------------+-------------+---------------*/
