@@ -296,7 +296,7 @@
 	Z80_INSN_CLOCK_API
 	zuint32 const z80_insn_clock_table[4][256] = {TABLE};
 
-#	undef  PATTERN
+#	undef PATTERN
 #endif
 
 
@@ -306,7 +306,7 @@
 	Z80_INSN_CLOCK_API
 	zuint32 const z80_insn_clock_extra_table[4][256] = {TABLE};
 
-#	undef  PATTERN
+#	undef PATTERN
 
 
 	Z80_INSN_CLOCK_API
