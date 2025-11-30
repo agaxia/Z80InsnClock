@@ -17,7 +17,7 @@ Most users will integrate Z80InsnClock as a CMake subproject or copy its source 
 
 ## Installation
 
-### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/debian-icon.svg" height="24"></sub> Debian, <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/ubuntu-icon.svg" height="24"></sub> Ubuntu and other Debian-based Linux distributions
+### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/debian-icon.svg" height="24" width="20"></sub> Debian, <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/ubuntu-icon.svg" height="24" width="25"></sub> Ubuntu and other Debian-based Linux distributions
 
 First, add the `zxe` repository and update the package index:
 
@@ -41,7 +41,7 @@ In case you need to build software that requires the Z80InsnClock library, insta
 sudo apt install libz80insnclock-dev
 ```
 
-### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/gentoo-icon.svg" height="24"></sub> Gentoo
+### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/gentoo-icon.svg" height="24" width="24"></sub> Gentoo
 
 First, add and sync the [`zxe`](https://github.com/redcode/zxe-gentoo-overlay) overlay:
 
@@ -56,13 +56,13 @@ Then install the library:
 emerge emulation-libs/z80insnclock
 ```
 
-### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/homebrew-icon.svg" height="24"></sub> Homebrew
+### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/homebrew-icon.svg" height="24" width="16"></sub> Homebrew
 
 ```shell
 brew install redcode/zxe/z80insnclock
 ```
 
-### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/windows-icon.png" height="24"></sub> Windows
+### <sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/windows-icon.png" height="24" width="24"></sub> Windows
 
 Pre-built binaries for Windows are available on the [download](https://zxe.io/software/Z80InsnClock/download) page.
 
@@ -195,11 +195,11 @@ cmake --build . --config Release
 cmake --install . --config Release --strip
 ```
 
-<sup>**[<sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/sh.svg" height="14"></sub> build-and-install-Z80InsnClock.sh](https://zxe.io/software/Z80InsnClock/scripts/build-and-install-Z80InsnClock.sh)**</sup>
+<sup>**[<sub><img src="https://zxe.io/software/Z80InsnClock/assets/images/sh.svg" height="14" width="19"></sub> build-and-install-Z80InsnClock.sh](https://zxe.io/software/Z80InsnClock/scripts/build-and-install-Z80InsnClock.sh)**</sup>
 
 ## License
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/BSD_wordmark.svg" width="160" align="right">
+<img src="https://zxe.io/software/Z80InsnClock/assets/images/0bsd.svg" width="150" height="70" align="right">
 
 Copyright © 2021-2025 Sofía Ortega Sosa.
 
