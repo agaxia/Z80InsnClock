@@ -73,6 +73,10 @@ typedef struct {
 #define Z80_INSN_CLOCK_PREFIX_XY 2
 #define Z80_INSN_CLOCK_PREFIX_ED 3
 
+#define Z80_INSN_CLOCK_RESUME_HALT   1
+#define Z80_INSN_CLOCK_RESUME_XY     2
+#define Z80_INSN_CLOCK_RESUME_IM0_XY 3
+
 Z_EXTERN_C_BEGIN
 
 Z80_INSN_CLOCK_API extern zuint32 const z80_insn_clock_table[4][256];
