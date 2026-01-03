@@ -27,7 +27,10 @@ project(Z80InsnClock
 	HOMEPAGE_URL "https://zxe.io/software/Z80InsnClock")
 
 unset(_)
-message("${PROJECT_NAME} v${PROJECT_VERSION}")
+
+execute_process(
+	COMMAND ${CMAKE_COMMAND} -E echo
+		"${PROJECT_NAME} v${PROJECT_VERSION}")
 
 set(${PROJECT_NAME}
 "All" CACHE STRING
@@ -240,7 +243,9 @@ if(${PROJECT_NAME}_WITH_HTML_DOCUMENTATION OR ${PROJECT_NAME}_WITH_PDF_DOCUMENTA
 endif()
 
 if(NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-	message("${PROJECT_NAME} END")
+	execute_process(
+		COMMAND ${CMAKE_COMMAND} -E echo
+			"${PROJECT_NAME} v${PROJECT_VERSION} END")
 endif()
 
 # CMakeLists.txt EOF
