@@ -3,8 +3,6 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-author = u'Sofía Ortega Sosa'
-copyright = u'2021-2025 Sofía Ortega Sosa'
 extensions = ['breathe']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

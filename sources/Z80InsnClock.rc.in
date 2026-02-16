@@ -17,11 +17,11 @@ BEGIN
 	BEGIN
 		BLOCK "040904B0"
 		BEGIN
-			VALUE "CompanyName",      "Sofía Ortega Sosa"
+			VALUE "CompanyName",      "@RC_AUTHOR@"
 			VALUE "FileDescription",  "@PROJECT_DESCRIPTION@"
 			VALUE "FileVersion",      "@PROJECT_VERSION@"
 			VALUE "InternalName",     "@PROJECT_NAME@"
-			VALUE "LegalCopyright",   "Copyright © 2021-2025 Sofía Ortega Sosa"
+			VALUE "LegalCopyright",   "Copyright © @RC_COPYRIGHT_YEAR@ @RC_AUTHOR@"
 			VALUE "OriginalFilename", "@PROJECT_NAME@.dll"
 			VALUE "ProductName",      "@PROJECT_NAME@"
 			VALUE "ProductVersion",   "@PROJECT_VERSION@"
